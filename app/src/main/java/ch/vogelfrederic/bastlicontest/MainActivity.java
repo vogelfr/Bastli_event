@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int NUM_LEDS = 112;
     private ToggleButton toggle;
     private Button selectColor;
+    private ToggleButton toggle_pulsate;
     public static int color = Color.BLACK;
     public static int colorSelected = Color.WHITE;
 
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         toggle = (ToggleButton) findViewById(R.id.toggleButton_toggle);
         selectColor = (Button) findViewById(R.id.button_selectColor);
+        toggle_pulsate = (ToggleButton) findViewById(R.id.toggleButton_pulsate);
 
     }
 
@@ -68,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         updateColor();
     }
 
-    public void updateColor() {
+    public static void updateColor() {
         for (int i = 0; i < NUM_STRIPS; i++) {
             byte[] data;
             data = new byte[1+NUM_LEDS*3];
@@ -115,6 +117,45 @@ public class MainActivity extends AppCompatActivity {
     //TODO: Random (each LED random, new color with x Hz)
 
     //TODO: Random (each strip one random color, new color with x Hz)
+
+    public void pulsate(View v) {
+        Log.e("PULSATE", "Toggle pressed");
+        double redStep = ((double) Color.red(color)) / 120.0;
+        double greenStep = ((double) Color.green(color)) / 120.0;
+        double blueStep = ((double) Color.blue(color)) / 120.0;
+
+        Pulsate t = new Pulsate(redStep, greenStep, blueStep);
+
+        if (toggle_pulsate.isChecked()) {
+            t.start();
+        } else {
+            Log.e("THREAD", "Stopped");
+            Pulsate.cancelRequested = true;
+            t.interrupt();
+            color = colorSelected;
+            updateColor();
+
+
+        }
+
+
+/*
+        int change = 0;
+        change += (Color.red(color)/120) << 16;
+        change += (Color.green(color)/120) << 8;
+        change += (Color.blue(color)/120);
+        Log.e("Pulsate", "Change: " + change);
+        Pulsate thread = new Pulsate(change);
+
+        if (toggle_pulsate.isChecked()) {
+            thread.start();
+        } else {
+            thread.cancel();
+            color = colorSelected;
+            updateColor();
+        }
+        */
+    }
 
 
 

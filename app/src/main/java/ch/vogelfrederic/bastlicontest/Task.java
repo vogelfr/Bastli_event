@@ -27,7 +27,6 @@ public class Task extends AsyncTask<byte[], Void, Void>{
         for (int t = 0; t < 1; t++) {
             try {
                 DatagramPacket packet = new DatagramPacket(data, data.length, address, port);
-                Log.d("UDP", "Sending data (length: " + data.length + ")");
                 datagramSocket.send(packet);
             } catch (Exception e) {
                 e.printStackTrace();
