@@ -16,25 +16,21 @@ import java.net.UnknownHostException;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static InetAddress address;
-    public static InetSocketAddress socketAddress;
-    public static DatagramPacket packet;
+    protected static final String IP = "10.6.66.10";
+    protected static final int port = 1337;
+    protected static InetAddress address;
+    protected static InetSocketAddress socketAddress;
     public static DatagramSocket datagramSocket;
     public static final int NUM_STRIPS = 15;
     public static final int NUM_LEDS = 112;
-    public byte[] data;
-    public static AsyncTask<Void, Void, Void> async;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        byte[] IP={10,6,66,10};
-        int port = 1337;
-
         try {
-            address = InetAddress.getByAddress(IP);
+            address = InetAddress.getByName(IP);
             Log.d("address", address.toString());}
         catch (Exception e) {Log.d("1", "Hello");}
         try{
@@ -48,35 +44,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void allOff(View v) {
-        data = new byte[1+NUM_LEDS*3];
         for (int i = 0; i < NUM_STRIPS; i++) {
+            byte[] data;
+            data = new byte[1+NUM_LEDS*3];
             data[0] = (byte) i;
-            for (int j = 1; j < 3*NUM_LEDS; j++) {
+            for (int j = 1; j < data.length; j++) {
                 data[j] = 0;
             }
 
-            async = new AsyncTask<Void, Void, Void>() {
+            AsyncTask<byte[], Void, Void> async = new AsyncTask<byte[], Void, Void>() {
                 @Override
-                protected Void doInBackground(Void... params) {
-                    for (int t = 0; t < 10000; t++) {
+                protected Void doInBackground(byte[]... params) {
+                    byte[] data = params[0];
+                    for (int t = 0; t < 1; t++) {
                         try {
-                            packet = new DatagramPacket(data, data.length, address, 1337);
-                            if (packet.equals(null)) {
-                                Log.d("NOPE", "");
-                            } else {
-                                Log.d("UDP", "Sending data (length: " + data.length + ")");
-                                datagramSocket.send(packet);
-                            }
+                            DatagramPacket packet = new DatagramPacket(data, data.length, address, port);
+                            Log.d("UDP", "Sending data (length: " + data.length + ")");
+                            datagramSocket.send(packet);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
-
                     return null;
                 }
             };
 
-            async.execute();
+            async.execute(data);
 
         }
 
