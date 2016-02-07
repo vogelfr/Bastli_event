@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void pickColor(View v) {
-        AmbilWarnaDialog colorPicker = new AmbilWarnaDialog(this, 0xff0000ff, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+        AmbilWarnaDialog colorPicker = new AmbilWarnaDialog(this, color+0xFF000000, new AmbilWarnaDialog.OnAmbilWarnaListener() {
             @Override
             public void onCancel(AmbilWarnaDialog dialog) {
             }
@@ -111,6 +111,10 @@ public class MainActivity extends AppCompatActivity {
 
         colorPicker.show();
     }
+
+    //TODO: Random (each LED random, new color with x Hz)
+
+    //TODO: Random (each strip one random color, new color with x Hz)
 
 
 
