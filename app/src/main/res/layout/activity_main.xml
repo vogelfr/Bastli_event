@@ -25,17 +25,6 @@
             android:clickable="true"
             android:onClick="toggleLights" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_weight="1"
-            android:text="Update"
-            android:id="@+id/button_update"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:onClick="updateColor"
-            android:clickable="true" />
     </LinearLayout>
 
     <Button

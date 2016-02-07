@@ -31,9 +31,9 @@ public class MainActivity extends AppCompatActivity {
     public static final int NUM_STRIPS = 15;
     public static final int NUM_LEDS = 112;
     private ToggleButton toggle;
-    private Button update;
     private Button selectColor;
-    private int[] colors = {0,0,0};
+    public static int color = Color.BLACK;
+    public static int colorSelected = Color.WHITE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,26 +53,22 @@ public class MainActivity extends AppCompatActivity {
         catch (Exception e) {Log.d("3", "Hello");}
 
         toggle = (ToggleButton) findViewById(R.id.toggleButton_toggle);
-        update = (Button) findViewById(R.id.button_update);
         selectColor = (Button) findViewById(R.id.button_selectColor);
 
     }
 
     public void toggleLights(View v) {
-        for (int i = 0; i < NUM_STRIPS; i++) {
-            byte[] data;
-            data = new byte[1+NUM_LEDS*3];
-            data[0] = (byte) i;
-            for (int j = 1; j < data.length; j++) {
-                data[j] = toggle.isChecked()? (byte) 255 : 0;
+        if (!toggle.isChecked()) {
+            for (int i = 0; i < 3; i++) {
+                color = Color.BLACK;
             }
-
-            Task task = new Task(datagramSocket, address, port);
-            task.execute(data);
+        } else {
+            color = colorSelected;
         }
+        updateColor();
     }
 
-    public void updateColor(View v) {
+    public void updateColor() {
         for (int i = 0; i < NUM_STRIPS; i++) {
             byte[] data;
             data = new byte[1+NUM_LEDS*3];
@@ -80,13 +76,13 @@ public class MainActivity extends AppCompatActivity {
             for (int j = 1; j < data.length; j++) {
                 switch (j % 3) {
                     case 1:
-                        data[j] = (byte) colors[0];
+                        data[j] = (byte) Color.red(color);
                         break;
                     case 2:
-                        data[j] = (byte) colors[1];
+                        data[j] = (byte) Color.green(color);
                         break;
                     default:
-                        data[j] = (byte) colors[2];
+                        data[j] = (byte) Color.blue(color);
                         break;
                 }
             }
@@ -105,10 +101,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onOk(AmbilWarnaDialog dialog, int color) {
                 Log.d("COLOR", String.valueOf(color));
-                colors[0] = Color.red(color);
-                colors[1] = Color.green(color);
-                colors[2] = Color.blue(color);
+                MainActivity.color = color;
+                MainActivity.colorSelected = color;
                 selectColor.setBackgroundColor(color);
+                toggle.setChecked(true);
+                updateColor();
             }
         });
 
