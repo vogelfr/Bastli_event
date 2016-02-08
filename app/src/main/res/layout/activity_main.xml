@@ -36,12 +36,29 @@
         android:clickable="true"
         android:onClick="pickColor" />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Show gradient"
+        android:id="@+id/button_showGradient"
+        android:clickable="true"
+        android:onClick="gradient" />
+
     <ToggleButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="New ToggleButton"
         android:id="@+id/toggleButton_pulsate"
         android:clickable="true"
-        android:onClick="pulsate" />
+        android:onClick="chase" />
+
+    <ToggleButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Do Stuff"
+        android:id="@+id/toggleButton_randomButton"
+        android:clickable="true"
+        android:onClick="gradient" />
+
 
 </LinearLayout>
