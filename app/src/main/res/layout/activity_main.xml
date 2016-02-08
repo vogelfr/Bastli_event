@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
-    android:orientation="vertical"
-    android:weightSum="1">
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        ></include>
 
 
     <LinearLayout
@@ -15,50 +16,58 @@
         android:layout_height="wrap_content"
         android:id="@+id/linearLayout">
 
-        <ToggleButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Lights"
-            android:id="@+id/toggleButton_toggle"
-            android:layout_alignParentStart="true"
-            android:clickable="true"
-            android:onClick="toggleLights" />
-
     </LinearLayout>
 
-    <Button
+    <Switch
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Select color"
-        android:id="@+id/button_selectColor"
-        android:layout_weight="0.16"
-        android:clickable="true"
-        android:onClick="pickColor" />
+        android:text="RGB chase"
+        android:id="@+id/switch_coloredChase"
+        android:layout_alignParentStart="true"
+        android:checked="false"
+        android:layout_below="@+id/toolbar" />
 
-    <Button
+    <Switch
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Show gradient"
-        android:id="@+id/button_showGradient"
-        android:clickable="true"
-        android:onClick="gradient" />
+        android:text="Pulsate"
+        android:id="@+id/switch_pulsate"
+        android:layout_below="@+id/switch_chase"
+        android:layout_alignParentStart="true" />
 
     <ToggleButton
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New ToggleButton"
-        android:id="@+id/toggleButton_pulsate"
-        android:clickable="true"
-        android:onClick="chase" />
+        android:layout_weight="1"
+        android:text="Lights"
+        android:id="@+id/toggle_off"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:textOff="turn Lights On"
+        android:textOn="Turn Lights Off" />
 
-    <ToggleButton
-        android:layout_width="match_parent"
+    <Switch
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Do Stuff"
-        android:id="@+id/toggleButton_randomButton"
+        android:text="Chase"
+        android:id="@+id/switch_chase"
+        android:layout_below="@+id/switch_coloredChase"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:clickable="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Gradient"
+        android:id="@+id/button_gradient"
         android:clickable="true"
-        android:onClick="gradient" />
+        android:onClick="gradient"
+        android:layout_above="@+id/toggle_off"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
 
 
-</LinearLayout>
+</RelativeLayout>
