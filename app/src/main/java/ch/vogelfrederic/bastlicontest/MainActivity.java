@@ -1,27 +1,15 @@
 package ch.vogelfrederic.bastlicontest;
 
-import android.content.Intent;
-import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SurfaceView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Switch;
 import android.widget.ToggleButton;
 
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-
-import ch.vogelfrederic.bastlicontest.Async.Chase;
-import ch.vogelfrederic.bastlicontest.Async.Chase_colored;
-import ch.vogelfrederic.bastlicontest.Async.Pulsate;
-import ch.vogelfrederic.bastlicontest.Async.SendData;
 import ch.vogelfrederic.bastlicontest.Listeners.ChaseListener;
 import ch.vogelfrederic.bastlicontest.Listeners.ColoredChaseListener;
 import ch.vogelfrederic.bastlicontest.Listeners.PulsateListener;
@@ -55,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
         switch_pulsate = (Switch) findViewById(R.id.switch_pulsate);
         switch_pulsate.setOnCheckedChangeListener(new PulsateListener());
 
+        Util.init();
+
     }
 
     @Override
@@ -73,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch (id) {
             case R.id.action_color:
-                AmbilWarnaDialog colorPicker = new AmbilWarnaDialog(this, Util.color+0xFF000000, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+                AmbilWarnaDialog colorPicker = new AmbilWarnaDialog(this, Util.color + 0xFF000000, new AmbilWarnaDialog.OnAmbilWarnaListener() {
                     @Override
                     public void onCancel(AmbilWarnaDialog dialog) {
                     }
@@ -107,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
 
         Util.sendTop(colors);
     }
-
 
 
 }

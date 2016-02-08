@@ -1,13 +1,13 @@
-package ch.vogelfrederic.bastlicontest;
+package ch.vogelfrederic.bastlicontest.Async;
 
 import android.graphics.Color;
 import android.util.Log;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
+import ch.vogelfrederic.bastlicontest.Util;
 
 /**
  * Created by vogelfr on 07.02.2016.
+ * Project: BastliContest
  */
 public class Chase_colored extends Thread {
 
@@ -19,18 +19,17 @@ public class Chase_colored extends Thread {
     public Chase_colored(int size) {
         cancelRequested = false;
         this.size = size;
-        colors = MainActivity.gradient();
+        colors = Util.gradient();
     }
 
     public void run() {
         int counter = 0;
-        while (!cancelRequested) {
+        while (!cancelRequested  && !Util.off) {
 
             int base = colors[counter];
             double redStep = (Color.red(base)/size);
             double greenStep = (Color.green(base)/size);
             double blueStep = (Color.blue(base)/size);
-
             for (int i = 0; i < size; i++) {
                 int current = Color.rgb((int)(Color.red(base) - redStep*i), (int)(Color.green(base) - greenStep*i), (int)(Color.blue(base) - blueStep*i));
                 strip[(i+counter)%896] = current;
@@ -39,7 +38,7 @@ public class Chase_colored extends Thread {
                 strip[(i+counter)%896] = 0;
             }
 
-            MainActivity.sendTop(strip);
+            Util.sendTop(strip);
 
             try {
                 Thread.sleep(17);
@@ -58,4 +57,3 @@ public class Chase_colored extends Thread {
         Log.e("OUT LOOP", "Stopped");
     }
 }
-;
