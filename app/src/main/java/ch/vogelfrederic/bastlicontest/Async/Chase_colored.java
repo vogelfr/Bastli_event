@@ -24,6 +24,7 @@ public class Chase_colored extends Thread {
 
     public void run() {
         int counter = 0;
+
         while (!cancelRequested  && !Util.off) {
 
             int base = colors[counter];

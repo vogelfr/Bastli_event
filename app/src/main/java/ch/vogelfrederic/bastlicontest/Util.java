@@ -104,7 +104,7 @@ public class Util {
         data[0] = (byte) strip;
 
         int length = tosend.length > 336? 336 : tosend.length;
-        System.arraycopy(data, 1, tosend, 0, length);
+        System.arraycopy(tosend, 0, data, 1, length);
 
         for (int i = 0; i < (NUM_LEDS * 3) - length; i++) {
             data[length + 1 + i] = 0;

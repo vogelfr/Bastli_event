@@ -1,5 +1,6 @@
 package ch.vogelfrederic.bastlicontest;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -8,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Switch;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import ch.vogelfrederic.bastlicontest.Listeners.ChaseListener;
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ToggleButton toggle_off;
     private Toolbar toolbar;
+    private MenuItem action_color;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        action_color = (MenuItem) findViewById(R.id.action_color);
         return true;
     }
 
@@ -60,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
+        action_color = item;
 
         switch (id) {
             case R.id.action_color:
@@ -74,6 +81,14 @@ public class MainActivity extends AppCompatActivity {
                         Util.color = color;
                         Util.colorSelected = color;
                         toolbar.setBackgroundColor(color);
+                        if (Math.min(Color.red(color), Math.min(Color.green(color), Color.blue(color))) > 128) {
+                            toolbar.setTitleTextColor(Color.BLACK);
+                            action_color.setIcon(R.drawable.ic_format_paint_black_36dp);
+                        } else {
+                            toolbar.setTitleTextColor(Color.WHITE);
+                            action_color.setIcon(R.drawable.ic_format_paint_white_36dp);
+                        }
+
                         toggle_off.setChecked(true);
                         Util.updateColor();
                     }
@@ -93,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void gradient(View v) {
+        Toast.makeText(this, "Showing gradient", Toast.LENGTH_SHORT).show();
         int[] colors = Util.gradient();
 
         Util.sendTop(colors);
