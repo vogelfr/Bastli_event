@@ -7,7 +7,7 @@
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar"
-        ></include>
+        />
 
 
     <LinearLayout
@@ -66,6 +66,24 @@
         android:clickable="true"
         android:onClick="gradient"
         android:layout_above="@+id/toggle_off"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RGB Flow"
+        android:id="@+id/switch_rgbFlow"
+        android:layout_below="@+id/switch_pulsate"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RGB Turning"
+        android:id="@+id/switch_rgbTopTurning"
+        android:layout_below="@+id/switch_rgbFlow"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true" />
 

@@ -5,6 +5,7 @@ import android.util.Log;
 
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.util.ArrayList;
 
 import ch.vogelfrederic.bastlicontest.Async.SendData;
 
@@ -42,26 +43,32 @@ public class Util {
         int red = 255;
         int green = 0;
         int blue = 0;
-        double step = 255/149;
+        double step = 255.0/149.0;
         double current = 0.0;
         for (int i = 0; i < 894; i++) {
             if (i < 149) {
                 current += step;
+                current = current > 255? 255 : current;
                 green = (int) current;
-            } else if (i < 298) {
+            } else if (i < 248) {
                 current -= step;
+                current = current < 0? 0 : current;
                 red = (int) current;
             } else if (i < 447) {
                 current += step;
+                current = current > 255? 255 : current;
                 blue = (int) current;
             } else if (i < 596) {
                 current -= step;
+                current = current < 0? 0 : current;
                 green = (int) current;
             } else if (i < 745) {
                 current += step;
+                current = current > 255? 255 : current;
                 red = (int) current;
             } else if (i < 894) {
                 current -= step;
+                current = current < 0? 0 : current;
                 blue = (int) current;
             }
             colors[i] = Color.rgb(red, green, blue);
@@ -114,6 +121,11 @@ public class Util {
         sendData.execute(data);
     }
 
+    public static void sendData(byte[] data) {
+        SendData sendData = new SendData();
+        sendData.execute(data);
+    }
+
     public static void sendTop(int[] strip) {
         int[] indices = {1,4,9,12,5,6,7,8};
         boolean[] directions = {false, false, false, false, true, true, true, true};
@@ -153,6 +165,24 @@ public class Util {
                 }
             }
             sendData(data, indices[s]);
+        }
+    }
+
+    public static void sendTop(ArrayList<Integer> strip) {
+        int[] indices = {1,4,9,12,5,6,7,8};
+        boolean[] directions = {false, false, false, false, true, true, true, true};
+
+        for (int s = 0; s < indices.length; s++) {
+            byte[] data = new byte[112*3 + 1];
+            data[0] = (byte) indices[s];
+            for (int i = 0; i < 336; i++) {
+                if (directions[s]) {
+                    data[i+1] = (byte) (i % 3 == 0? Color.red(strip.get(s*112 + i/3)) : (i % 3 == 1? Color.green(strip.get(s*112 + i / 3)) : Color.blue(strip.get(s*112 + i/3))));
+                } else {
+                    data[336-i] = (byte) (i % 3 == 0? Color.blue(strip.get(s * 112 + i / 3)) : (i % 3 == 1? Color.green(strip.get(s * 112 + i / 3)) : Color.red(strip.get(s * 112 + i / 3))));
+                }
+            }
+            sendData(data);
         }
     }
 }

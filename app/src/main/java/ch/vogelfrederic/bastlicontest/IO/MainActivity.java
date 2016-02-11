@@ -1,4 +1,4 @@
-package ch.vogelfrederic.bastlicontest;
+package ch.vogelfrederic.bastlicontest.IO;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -15,7 +15,11 @@ import android.widget.ToggleButton;
 import ch.vogelfrederic.bastlicontest.Listeners.ChaseListener;
 import ch.vogelfrederic.bastlicontest.Listeners.ColoredChaseListener;
 import ch.vogelfrederic.bastlicontest.Listeners.PulsateListener;
+import ch.vogelfrederic.bastlicontest.Listeners.RGBFlowListener;
+import ch.vogelfrederic.bastlicontest.Listeners.RGBTopTurningListener;
 import ch.vogelfrederic.bastlicontest.Listeners.ToggleListener;
+import ch.vogelfrederic.bastlicontest.R;
+import ch.vogelfrederic.bastlicontest.Util;
 import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         Switch switch_coloredChase;
         Switch switch_chase;
         Switch switch_pulsate;
+        Switch switch_rgbFlow;
+        Switch switch_rgbTopTurning;
 
         toggle_off = (ToggleButton) findViewById(R.id.toggle_off);
         toggle_off.setOnCheckedChangeListener(new ToggleListener());
@@ -45,6 +51,10 @@ public class MainActivity extends AppCompatActivity {
         switch_chase.setOnCheckedChangeListener(new ChaseListener());
         switch_pulsate = (Switch) findViewById(R.id.switch_pulsate);
         switch_pulsate.setOnCheckedChangeListener(new PulsateListener());
+        switch_rgbFlow = (Switch) findViewById(R.id.switch_rgbFlow);
+        switch_rgbFlow.setOnCheckedChangeListener(new RGBFlowListener());
+        switch_rgbTopTurning = (Switch) findViewById(R.id.switch_rgbTopTurning);
+        switch_rgbTopTurning.setOnCheckedChangeListener(new RGBTopTurningListener());
 
         Util.init();
 
